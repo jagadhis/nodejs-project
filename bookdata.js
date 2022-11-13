@@ -4,4 +4,4 @@ const bookdata = [
     {title: 'Lorien Legacies', id: 3}
     ]
 
-export default bookdata;    
+module.exports = bookdata;   
