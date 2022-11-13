@@ -10,7 +10,7 @@ const books = [
 ]
  
 const schema = Joi.object({
-    title:Joi.string().min(3).required(),
+    title:Joi.string().min(3),
 })
 
 //READ Request Handlers
