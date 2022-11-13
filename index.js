@@ -27,4 +27,56 @@ app.get('/api/cabs/:id',(req,res)=>{
 
 
 // CREATE Request handlers
+app.post('/api/cabs', (req, res)=> {
+ 
+    const { error } = validatecab(req.body);
+    if (error){
+    res.status(400).send(error.details[0].message)
+    return;
+    }
+    const cab = {
+    id: cabs.length + 1,
+    title: req.body.title
+    };
+    cabs.push(cab);
+    res.send(cab);
+    });
+     
+    //UPDATE Request Handler
+    app.put('/api/cabs/:id', (req, res) => {
+    const cab = cabs.find(c=> c.id === parseInt(req.params.id));
+    if (!cab) res.status(404).send('<h2 style="font-family: Malgun Gothic; color: darkred;">Not Found!! </h2>');
+     
+    const { error } = validatecab(req.body);
+    if (error){
+    res.status(400).send(error.details[0].message);
+    return;
+    }
+     
+    cab.title = req.body.title;
+    res.send(cab);
+    });
+     
+    //DELETE Request Handler
+    app.delete('/api/cabs/:id', (req, res) => {
+     
+    const cab = cabs.find( c=> c.id === parseInt(req.params.id));
+    if(!cab) res.status(404).send('<h2 style="font-family: Malgun Gothic; color: darkred;"> Not Found!! </h2>');
+     
+    const index = cabs.indexOf(cab);
+    cabs.splice(index,1);
+     
+    res.send(cab);
+    });
+     
+    function validatecab(cab) {
+    const schema = {
+    title: Joi.string().min(3).required()
+    };
+    return Joi.validate(cab, schema);
+     
+    }
 
+//PORT ENVIRONMENT VARIABLE
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`Listening on port ${port}..`));
