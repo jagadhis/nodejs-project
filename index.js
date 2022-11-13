@@ -32,7 +32,7 @@ res.send(book);
 //CREATE Request Handler
 app.post('/api/books', (req, res)=> {
  
-    const validation = schema.validate(req.body);
+const validation = schema.validate(req.body);
 if (validation.error){
 res.status(400).send(validation.error.details[0].message)
 return;
