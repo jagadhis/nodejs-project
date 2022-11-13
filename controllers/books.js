@@ -48,3 +48,12 @@ books.splice(index,1);
  
 res.send(book);
 })
+
+
+module.exports = {
+    getBooks,
+    getBook,
+    createBook,
+    updateBook,
+    deleteBook
+}
