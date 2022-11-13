@@ -69,11 +69,11 @@ app.post('/api/cabs', (req, res)=> {
     res.send(cab);
     });
      
-    function validatecab(cab) {
+    function validatecab(cabs) {
     const schema = {
     title: Joi.string().min(3).required()
     };
-    return Joi.validate(cabs, schema);
+    return Joi.validatecab(cabs, schema);
      
     }
 
