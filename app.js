@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("./model/user");
-// const auth = require("./middleware/auth");
+const auth = require("./middleware/auth");
 
 const app = express();
 
@@ -79,12 +79,13 @@ app.post("/login", async (req, res) => {
           expiresIn: "5h",
         }
       );
-
+      res.setHeader('x-access-token', 'Bearer '+ token);
       // save user token
-      user.token = token;
+      // user.token = token;
 
       // user
       return res.status(200).json(user);
+     
     }
     return res.status(400).send("Invalid Credentials");
   } catch (err) {
@@ -92,9 +93,9 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// app.get("/welcome", auth, (req, res) => {
-//   res.status(200).send("Welcome to FreeCodeCamp 🙌");
-// });
+app.get("/welcome", auth, (req, res) => {
+  res.status(200).send("Hello");
+});
 
 // This should be the last route else any after it won't work
 app.use("*", (req, res) => {
